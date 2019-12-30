@@ -6,6 +6,7 @@
 $maxlines = 10000;
 $rpi_logpath   = "/var/log/apache2/access.log";
 $uwamp_logpath = "../bin/apache/logs/access.log";
+# XXX rachel plus log path?
 
 #-------------------------------------------
 # determine correct path
@@ -63,7 +64,7 @@ function draw_stats() {
     # read query string (and display)
     if ($_GET && $_GET['module']) {
         $module = $_GET['module'];
-        $out .= "<h1><a href=\"stats.php\"> Stats</a></h1>\n";
+        $out .= "<h1><a href=\"stats.php\">RACHEL Stats</a></h1>\n";
         $dispmod = preg_replace("/\/modules\//", "", $module);
     } else {
         if (file_exists("./modules")) {
@@ -71,7 +72,7 @@ function draw_stats() {
         } else {
             $module = "/";
         }
-        $out .= "<h1> Stats</h1>\n";
+        $out .= "<h1>RACHEL Stats</h1>\n";
         $dispmod = "";
     }
     $modmatch = preg_quote($module, "/");
@@ -268,7 +269,7 @@ function tail($filename, $lines = 10, $buffer = 4096) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>STATS</title>
+    <title>RACHEL - STATS</title>
     <style>
         body { background-color: #ffc; font-family: sans-serif; }
         h1 { margin-bottom: 10px; }

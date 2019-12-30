@@ -61,7 +61,7 @@ if (isset($_GET['moddirs'])) {
 # We also allow shutting down the server so as to avoid
 # damaging the SD/HD. This requires that www-data has
 # sudo access to /sbin/shutdown, which should be set up
-# automatically during  installation
+# automatically during rachelpiOS installation
 } else if (isset($_POST['shutdown'])) {
     exec("sudo /sbin/shutdown now", $exec_out, $exec_err);
     if ($exec_err) {
@@ -87,15 +87,25 @@ if (isset($_GET['moddirs'])) {
 <title>TechSpace Admin</title>
 <link rel="stylesheet" href="css/normalize-1.1.3.css">
 <link rel="stylesheet" href="css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/mdb.min.css">
 <style>
-    body { margin: 10px; }
+    body { 
+        margin: 0;
+        padding: 0;
+    }
     button { margin: 3px; padding: .25em 1em; }
     .ui-icon { background-image: url(css/ui-lightness/images/ui-icons_ef8c08_256x240.png); }
-    #sortable { list-style-type: none; margin: 0; padding: 0; }
+    #sortable { 
+        list-style-type: none; 
+        margin: 0; 
+        padding: 0; }
     #sortable li {
         margin: 0 3px 3px 3px;
+        padding-top: 20px;
         padding: .25em;
         padding-left: 1.5em;
+        background-color: #fff !important;
         height: 1em; width: 40em;
         overflow: hidden;
         position: relative;
@@ -151,13 +161,19 @@ if (isset($_GET['moddirs'])) {
 </script>
 </head>
 <body>
-
-<div style="float: right;">
-<a href="index.php">index</a> &bull;
-<a href="<?php echo "http://x:x@$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>">logout</a>
-</div>
-<h1>TECHSPACE Admin</h1>
-
+<nav class="navbar navbar-expand-lg navbar-dark indigo">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img src="images/logo.jpg" style="heigt: 70px; width: 100px;"></a>
+    </div>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="home.php">index</a> &bull;
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo "http://x:x@$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>">logout</a>
+        </li>
+    </ul>
+</nav>
 <?php
 
 $basedir = "modules";
@@ -211,12 +227,16 @@ if (is_dir($basedir)) {
     $disabled = " disabled";
     $found_nohtmlf = false;
     echo "<p>Found in /modules/:</p><ul id=\"sortable\">\n";
+    // echo "<div class=\"row\">\n";
     foreach (array_keys($fsmods) as $moddir) {
         if ($fsmods[$moddir]['nohtmlf']) {
             $found_nohtmlf = true;
             continue;
         }
-        echo "<li id=\"$moddir\" class=\"ui-state-default\">\n";
+        
+        echo "<div id=\"$moddir\" class=\"col-md-6 mt-3\">\n";
+        echo "<div id=\"$moddir\" class=\"card\">\n";
+        echo "<li id=\"$moddir\" class=\"p-5\">\n";
         if ($fsmods[$moddir]['hidden']) {
             $checked = " checked";
         } else {
@@ -231,10 +251,13 @@ if (is_dir($basedir)) {
             $disabled = "";
         }
         echo "</li>\n";
+        echo "</div>\n";
+        echo "</div>\n";
     }
+    // echo "</div>\n";
     echo "</ul>\n";
     
-    echo "<button onclick=\"saveState();\"$disabled>Save Changes</button>\n";
+    echo "<button class=\"btn btn-primary\" onclick=\"saveState();\"$disabled>Save Changes</button>\n";
 
     if ($found_nohtmlf) {
         echo "<h3>The following modules were ignored because they had no index.htmlf</h3><ul>\n";

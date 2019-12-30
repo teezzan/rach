@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Version Info</title>
+    <title>RACHEL Version Info</title>
     <style>
         table { border-collapse: collapse; }
         tr { border-top: 1px solid lightgray; }
@@ -44,11 +44,11 @@
 
 ?>
 
-<h1>Version Info</h1>
+<h1>RACHEL Version Info</h1>
 <table>
 <tr><td>Hardware</td><td><?php echo $hardware ?></td></tr>
 <tr><td>OS</td><td><?php echo $os ?></td></tr>
-<tr><td>Installer</td><td><?php passthru("cat /etc/rachelinstaller-version") ?></td></tr>
+<tr><td>RACHEL Installer</td><td><?php passthru("cat /etc/rachelinstaller-version") ?></td></tr>
 <tr><td>KA Lite</td><td><?php passthru("cat /etc/kalite-version") ?></tr>
 <tr><td>Kiwix</td><td><?php passthru("cat /etc/kiwix-version") ?></td></tr>
 <tr><td>Content Shell</td><td>2016.04.07</td></tr>

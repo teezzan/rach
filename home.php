@@ -209,7 +209,7 @@
 </div>
 </div>
 
-    <a href="add_modules.php">
+    <a href="file_upload.html">
         <div class="add-module">
             <i class="fa fa-plus"></i>
         </div>

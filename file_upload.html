@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/mdb.min.css">
+    <title>File Upload</title>
+    <style>
+        progress[value]{
+            height: 40px;
+            background-image:
+            -webkit-linear-gradient(-45deg, 
+                                    transparent 33%, rgba(0, 0, 0, .1) 33%, 
+                                    rgba(0,0, 0, .1) 66%, transparent 66%),
+            -webkit-linear-gradient(top, 
+                                    rgba(255, 255, 255, .25), 
+                                    rgba(0, 0, 0, .25)),
+            -webkit-linear-gradient(left, #09c, #f44);
+
+            border-radius: 2px; 
+            background-size: 35px 20px, 100% 100%, 100% 100%;
+        }
+    </style>
+    <script>   
+        function _(el){
+            return document.getElementById(el);
+        }
+
+        function uploadFile() {
+            var file = _("file1").files[0];
+            var formdata = new FormData();
+            formdata.append("file1", file);
+            var ajax = new XMLHttpRequest();
+            ajax.upload.addEventListener("progress", progressHandler, false);
+            ajax.addEventListener("load", completeHandler, false);
+            ajax.addEventListener("error", errorHandler, false);
+            ajax.addEventListener("abort", abortHandler, false);
+            ajax.open("POST", "add_modules.php");
+            ajax.send(formdata);
+        }
+
+        function progressHandler(event) {
+            _("loaded_n_total").innerHTML = "Uploaded "+event.loaded+" bytes of "+event.total;
+            var percent = (event.loaded / event.total) * 100;
+            _("progressBar").value = Math.round(percent);
+            _("status").innerHTML = Math.round(percent)+"% uploaded... please wait";
+        }
+
+        function completeHandler(event) {
+            _("status").innerHTML = event.target.responseText;
+            _("progressBar").value = 0
+        }
+
+        function errorHandler(event) {
+            _("status").innerHTML = "Extract Failed";
+        }
+
+        function abortHandler(event) {
+            _("status").innerHTML = "Extract Aborted";
+        }
+
+    </script>
+</head>
+<body>
+    <div class="col-md-6 mr-auto ml-auto mt-5">
+        <div class="card text-center" style="height: 300px;">
+            <form action="add_modules.php" id="upload_form" method="post" enctype="multipart/form-data" class="form-group mt-5">
+                <!-- <input type="file" name="file" id="filer_input2"> -->
+                <input type="file" name="file1" id="file1">
+                <input type="button" value="Extract" onClick="uploadFile()" class="btn btn-primary">
+                <progress id="progressBar" value="0" max="100" style="width: 300px;"></progress>
+                <h3 id="status"></h3>
+                <p id="loaded_n_total"></p>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
